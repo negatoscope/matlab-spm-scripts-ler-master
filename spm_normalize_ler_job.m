@@ -1,4 +1,4 @@
-function output = spm_standardPreproc_jsh(functional4D_fn, structural_fn, fwhm, spm_dir)
+function output = spm_normalize_ler_job(functional4D_fn, structural_fn, fwhm, spm_dir, input)
 % Function to complete preprocessing of structural and functional data from
 % a single subject for use in any other Matlab/SPM12 script.
 
@@ -20,11 +20,13 @@ function output = spm_standardPreproc_jsh(functional4D_fn, structural_fn, fwhm, 
 % Copyright (C) Stephan Heunis 2018
 
 % Load data
+%[d1, f1, e1] = fileparts(functional4D_fn);
+%rfunctional4D_fn = [d1 filesep 'r' f1 e1];
 f4D_spm = spm_vol(functional4D_fn);
 spm_size = size(f4D_spm);
 Nt = spm_size(1);
 % Declare output structure
-output = struct;
+% output = input;
 
 % STEP 5 -- Normalize (estimate and reslice) functionals to MNI
 disp('Step 5 -- Normalize (estimate and reslice) functionals to MNI');
@@ -32,21 +34,22 @@ spm('defaults','fmri');
 spm_jobman('initcfg');
 normalize = struct;
 % Data
-fnms={};
+fnorm={};
 for i = 1:Nt
-    fnms{i} = [functional4D_fn ',' num2str(i) ];
+    fnorm{i} = [input.rfunctional_fn ',' num2str(i) ];
 end
 
-[d, f, e] = fileparts(structural_fn);
-ranat = [d filesep 'r' f e];
-[d1, f1, e1] = fileparts(functional_fn);
-rfunc = [d1 filesep 'r' f1 e1];
+%[d, f, e] = fileparts(structural_fn);
+%ranat = [d filesep 'r' f e];
+%rstructural = spm_vol(ranat);
+%[d1, f1, e1] = fileparts(functional4D_fn);
+%rfunctional4D_fn = [d1 filesep 'r' f1 e1];
 
-normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.subj.vol = ranat;
-normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.subj.resample = rfunc;
+normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.subj.vol = {input.rstructural_fn};
+normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.subj.resample = fnorm';
 normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.biasreg = 0.0001;
 normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.biasfwhm = 60;
-normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.tpm = {'\home\jovyan\spm12\tpm\TPM.nii'};
+normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.tpm = {[spm_dir filesep 'tpm' filesep 'TPM.nii']};
 normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.affreg = 'mni';
 normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.reg = [0 0.001 0.5 0.05 0.2];
 normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.fwhm = 0;
@@ -59,5 +62,5 @@ normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.woptions.prefix = 'w';
 
 % Run
 spm_jobman('run',normalize.matlabbatch);
-output.rfunctional_fn = [d1 filesep 'w' f1 e1];
+output.wrfunctional_fn = [d1 filesep 'w' f1 e1];
 disp('Step 5 - Done!');
