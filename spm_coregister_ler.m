@@ -1,4 +1,4 @@
-function output = spm_standardPreproc_jsh(functional4D_fn, structural_fn, fwhm, spm_dir)
+function output = spm_coregister_ler(functional4D_fn, structural_fn, fwhm, spm_dir)
 % Function to complete preprocessing of structural and functional data from
 % a single subject for use in any other Matlab/SPM12 script.
 
@@ -24,7 +24,7 @@ f4D_spm = spm_vol(functional4D_fn);
 spm_size = size(f4D_spm);
 Nt = spm_size(1);
 % Declare output structure
-output = struct;
+% output = struct;
 
 % STEP 2 -- Coregister structural image to first dynamic image (estimate only)
 disp('Step 2 -- Coregister structural image to first dynamic image');
@@ -43,4 +43,3 @@ coreg_estimate.matlabbatch{1}.spm.spatial.coreg.estimate.eoptions.fwhm = [7 7];
 % Run
 spm_jobman('run',coreg_estimate.matlabbatch);
 disp('Step 2 - Done!');
-
