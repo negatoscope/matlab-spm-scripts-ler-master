@@ -1,4 +1,4 @@
-function output = spm_standardPreproc_jsh(functional4D_fn, structural_fn, fwhm, spm_dir)
+function output = spm_segmentation_ler(functional4D_fn, structural_fn, fwhm, spm_dir)
 % Function to complete preprocessing of structural and functional data from
 % a single subject for use in any other Matlab/SPM12 script.
 
@@ -24,7 +24,7 @@ f4D_spm = spm_vol(functional4D_fn);
 spm_size = size(f4D_spm);
 Nt = spm_size(1);
 % Declare output structure
-output = struct;
+% output = input;
 
 % STEP 3 -- Segmentation of coregistered structural image into GM, WM, CSF, etc
 % (with implicit warping to MNI space, saving forward and inverse transformations)
@@ -67,4 +67,3 @@ output.bone_fn = [d filesep 'c4' f e];
 output.soft_fn = [d filesep 'c5' f e];
 output.air_fn = [d filesep 'c6' f e];
 disp('Step 3 - done!');
-
