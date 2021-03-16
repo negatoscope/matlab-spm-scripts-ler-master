@@ -25,6 +25,7 @@ spm_size = size(f4D_spm);
 Nt = spm_size(1);
 % Declare output structure
 output = struct;
+[d, f, e] = fileparts(structural_fn);
 
 % STEP 4 -- Reslice all to functional-resolution image grid
 disp('Step 4 -- Reslice all to functional-resolution image grid');
