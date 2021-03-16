@@ -1,4 +1,4 @@
-function output = spm_standardPreproc_jsh(functional4D_fn, structural_fn, fwhm, spm_dir)
+function output = spm_reslice_ler(functional4D_fn, structural_fn, fwhm, spm_dir)
 % Function to complete preprocessing of structural and functional data from
 % a single subject for use in any other Matlab/SPM12 script.
 
@@ -24,7 +24,7 @@ f4D_spm = spm_vol(functional4D_fn);
 spm_size = size(f4D_spm);
 Nt = spm_size(1);
 % Declare output structure
-output = struct;
+% output = input;
 [d, f, e] = fileparts(structural_fn);
 
 % STEP 4 -- Reslice all to functional-resolution image grid
@@ -58,4 +58,3 @@ output.rbone_fn = [d filesep 'rc4' f e];
 output.rsoft_fn = [d filesep 'rc5' f e];
 output.rair_fn = [d filesep 'rc6' f e];
 disp('Step 4 - done!');
-
