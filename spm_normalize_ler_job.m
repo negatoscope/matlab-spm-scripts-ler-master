@@ -42,7 +42,7 @@ end
 %[d, f, e] = fileparts(structural_fn);
 %ranat = [d filesep 'r' f e];
 %rstructural = spm_vol(ranat);
-%[d1, f1, e1] = fileparts(functional4D_fn);
+[d1, f1, e1] = fileparts(input.rfunctional_fn);
 %rfunctional4D_fn = [d1 filesep 'r' f1 e1];
 
 normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.subj.vol = {input.rstructural_fn};
@@ -62,5 +62,5 @@ normalize.matlabbatch{1}.spm.spatial.normalise.estwrite.woptions.prefix = 'w';
 
 % Run
 spm_jobman('run',normalize.matlabbatch);
-output.wrfunctional_fn = [d1 filesep 'w' f1 e1];
+input.wrfunctional_fn = [d1 filesep 'w' f1 e1];
 disp('Step 5 - Done!');
