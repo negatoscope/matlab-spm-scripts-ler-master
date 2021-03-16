@@ -1,4 +1,4 @@
-function output = spm_standardPreproc_jsh(functional4D_fn, structural_fn, fwhm, spm_dir)
+function output = spm_realign_ler(functional4D_fn, structural_fn, fwhm, spm_dir)
 % Function to complete preprocessing of structural and functional data from
 % a single subject for use in any other Matlab/SPM12 script.
 
@@ -58,4 +58,3 @@ output.rfunctional_fn = [d filesep 'r' f e];
 output.mp_fn = [d filesep 'rp_' f '.txt'];
 output.MP = load(output.mp_fn);
 disp('Step 1 - Done!');
-
