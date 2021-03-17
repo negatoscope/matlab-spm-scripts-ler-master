@@ -1,4 +1,4 @@
-function spm_specify2nd_ler_job(stats_dir, input)
+function spm_specify2nd_ler(stats_dir, input)
 
 spm('defaults','fmri');
 spm_jobman('initcfg');
