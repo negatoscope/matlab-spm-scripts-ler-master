@@ -1,4 +1,4 @@
-function output = spm_normalize_ler_job(functional4D_fn, structural_fn, fwhm, spm_dir, input)
+function output = spm_normalize_ler(functional4D_fn, structural_fn, fwhm, spm_dir, input)
 % Function to complete preprocessing of structural and functional data from
 % a single subject for use in any other Matlab/SPM12 script.
 
